@@ -48,7 +48,11 @@
                 </thead>
                 <tbody th:unless="${books.isEmpty()}">
                     <tr th:each="book: ${books}">
-                        <td><span th:text="${book.bookTitle}"></span></td>
+                        <td>
+                            <a th:href="@{/book/view/{bookID}(bookID=${book.bookID})}">
+                                <span th:text="${book.bookTitle}"></span>
+                            </a>
+                        </td>
                         <td><span th:text="${book.author}"></span></td>
                         <td><span th:text="${book.publisher}"></span></td>
                         <td><span th:text="${book.enabled}"></span></td>
