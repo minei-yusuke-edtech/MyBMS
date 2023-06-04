@@ -14,7 +14,48 @@
         <h1>図書検索</h1>
     </header>
     <div class="container">
+        <div class="search-form">
+            <h2 class="search-headline">検索条件</h2>
+            <form action="/book/search" method="post" th:object="${searchForm}">
+                <label for="book">図書名</label>
+                <input type="text" th:field="*{book}">
 
+                <label for="classCode">分類</label>
+                <input type="text" th:field="*{classCode}">
+
+                <label for="author">著者</label>
+                <input type="text" th:field="*{author}">
+
+                <label for="publisher">出版社</label>
+                <input type="text" th:field="*{publisher}">
+
+                <label for="ISBN">ISBN</label>
+                <input type="text" th:field="*{ISBN}">
+
+                <input type="submit" value="検索">
+            </form>
+        </div>
+        <div class="search-result">
+            <h2 class="search-headline">検索結果</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>図書名</th>
+                        <th>著者</th>
+                        <th>出版社</th>
+                        <th>貸出可否</th>
+                    </tr>
+                </thead>
+                <tbody th:unless="${books.isEmpty()}">
+                    <tr th:each="book: ${books}">
+                        <td><span th:text="${book.bookTitle}"></span></td>
+                        <td><span th:text="${book.author}"></span></td>
+                        <td><span th:text="${book.publisher}"></span></td>
+                        <td><span th:text="${book.enabled}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <footer>
         <div class="container">
