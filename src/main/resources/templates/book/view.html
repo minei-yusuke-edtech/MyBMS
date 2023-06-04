@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:display="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
     <meta char set="UTF-8">
-    <title>図書表示 | 美ら島図書館図書貸出システム</title>
+    <title>図書情報 | 美ら島図書館図書貸出システム</title>
 
     <!-- css -->
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
@@ -11,10 +11,51 @@
 
     <header>
         <h1>美ら島図書館図書貸出システム</h1>
-        <h1>図書表示</h1>
+        <h1>図書情報</h1>
     </header>
     <div class="container">
-
+        <div class="book-info">
+            <p th:if="${book} == null">対象図書がみつかりません</p>
+            <table class="book-info-table">
+                <tr>
+                    <td>図書名</td>
+                    <td><span th:unless="${book} == null" th:text="${book.bookTitle}"></span></td>
+                </tr>
+                <tr>
+                    <td>著者</td>
+                    <td><span th:unless="${book} == null" th:text="${book.author}"></span></td>
+                </tr>
+                <tr>
+                    <td>出版社</td>
+                    <td><span th:unless="${book} == null" th:text="${book.publisher}"></span></td>
+                </tr>
+                <tr>
+                    <td>出版年</td>
+                    <td><span th:unless="${book} == null" th:text="${book.issue}"></span></td>
+                </tr>
+                <tr>
+                    <td>版数</td>
+                    <td><span th:unless="${book} == null" th:text="${book.version}"></span></td>
+                </tr>
+                <tr>
+                    <td>ISBN</td>
+                    <td><span th:unless="${book} == null" th:text="${book.isbn}"></span></td>
+                </tr>
+                <tr>
+                    <td>分類コード</td>
+                    <td><span th:unless="${book} == null" th:text="${book.classCode}"></span></td>
+                </tr>
+                <tr>
+                    <td>図書ID</td>
+                    <td><span th:unless="${book} == null" th:text="${book.bookID}"></span></td>
+                </tr>
+            </table>
+        </div>
+        <form action="/book/entry" method="post">
+            <input type="hidden" th:unless="${book} == null" th:value="${book.bookID}">
+            <input th:unless="${book} == null" type="submit" value="貸出候補図書に登録">
+            <input th:if="${book} == null" type="submit" value="貸出候補図書に登録" disabled>
+        </form>
     </div>
     <footer>
         <div class="container">

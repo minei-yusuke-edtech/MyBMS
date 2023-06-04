@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,8 +26,10 @@ public class BookController {
         return "book/find";
     }
 
-    @GetMapping("view")
-    public String view(Model model) {
+    @GetMapping("view/{bookID}")
+    public String view(Model model, @PathVariable("bookID") int bookID) {
+        Book book = bmsRepository.findById(bookID);
+        model.addAttribute("book", book);
         return "book/view";
     }
 

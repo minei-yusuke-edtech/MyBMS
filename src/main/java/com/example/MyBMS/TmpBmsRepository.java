@@ -16,5 +16,17 @@ public class TmpBmsRepository implements BmsRepository {
 
         return books;
     }
+
+    @Override
+    public Book findById(int bookID) {
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book(bookID, null, null, null, 0, null, null, null, false));
+
+        Book book = books.size() > 0 ? books.get(0) : null;
+        // debug用
+        if (bookID == -1) book = null;
+
+        return book;
+    }
     
 }
