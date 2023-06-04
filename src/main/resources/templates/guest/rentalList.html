@@ -15,7 +15,59 @@
         <h1>貸出図書リスト</h1>
     </header>
     <div class="container">
+        <form class="rent-books" method="post" action="/guest/return">
+            <h2 class="search-headline">貸出中図書</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>図書名</th>
+                        <th>著者</th>
+                        <th>出版社</th>
+                    </tr>
+                </thead>
+                <tbody th:unless="${rentBooks.isEmpty()}">
+                    <tr th:each="book: ${rentBooks}" th:object="${bookidlist}">
+                        <td>
+                            <input type="checkbox" name="selectedBooks" th:value="${book.bookID}" th:field="*{selectedBooks}">
+                        </td>
+                        <td><span th:text="${book.bookTitle}"></span></td>
+                        <td><span th:text="${book.author}"></span></td>
+                        <td><span th:text="${book.publisher}"></span></td>
+                        <!-- <td><span th:text="${book.enabled}"></span></td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="返却">
+        </form>
 
+        <form class="candidate-rent-books">
+            <h2 class="search-headline">貸出候補図書</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>図書名</th>
+                        <th>著者</th>
+                        <th>出版社</th>
+                        <th>状態</th>
+                    </tr>
+                </thead>
+                <!-- <tbody th:unless="${books.isEmpty()}">
+                    <tr th:each="book: ${rentBooks}" th:object="${bookidlist}">
+                        <td>
+                            <input type="checkbox" name="selectedBooks" th:value="${book.bookID}" th:field="*{selectedBooks}">
+                        </td>
+                        <td><span th:text="${book.bookTitle}"></span></td>
+                        <td><span th:text="${book.author}"></span></td>
+                        <td><span th:text="${book.publisher}"></span></td>
+                        <td><span th:text="${book.enabled}"></span></td>
+                    </tr>
+                </tbody> -->
+            </table>
+            <input type="submit" value="貸出" formmethod="post" formaction="/guest/rent">
+            <input type="submit" value="取消" formmethod="post" formaction="/guest/cancel">
+        </form>
     </div>
 
     <footer>

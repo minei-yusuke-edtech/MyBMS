@@ -28,5 +28,23 @@ public class TmpBmsRepository implements BmsRepository {
 
         return book;
     }
+
+    @Override
+    public ArrayList<Book> findAllRentBooks(String username) {
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book(0, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
+        books.add(new Book(1, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
+
+        return books;
+    }
+
+    @Override
+    public ArrayList<Book> findAllCandidateRentBooks(String username) {
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book(2, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
+        books.add(new Book(3, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
+
+        return books;
+    }
     
 }
