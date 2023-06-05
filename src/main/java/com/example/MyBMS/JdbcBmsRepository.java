@@ -1,18 +1,30 @@
 package com.example.MyBMS;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-// @Repository
-public class TmpBmsRepository implements BmsRepository {
+class BookRowMapper implements RowMapper<Book> {
+    public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Book book = new Book(rs.getInt("bookID"), rs.getString("bookTitle"), rs.getString("author"), rs.getString("publisher"), rs.getInt("issue"), rs.getString("version"), rs.getString("isbn"), rs.getString("classCode"), rs.getBoolean("enabled"));
+        return book;
+    }
+}
+
+@Repository
+public class JdbcBmsRepository implements BmsRepository {
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Override
     public ArrayList<Book> search(String bookTitle, String author, String publisher, String isbn, String classCode) {
-        ArrayList<Book> books = new ArrayList<>();
-        books.add(new Book(0, bookTitle, author, publisher, 0, publisher, isbn, classCode, false));
-        System.out.println("[executed query]");
-        System.out.println(String.format("SELECT * FROM books WHERE bookTitle LIKE \'%%\'||%s||\'%%\' AND author LIKE \'%%\'||%s||\'%%\' AND publisher LIKE \'%%\'||%s||\'%%\' AND isbn LIKE \'%%\'||%s||\'%%\' AND classCode LIKE \'%%\'||%s||\'%%\'", bookTitle, author, publisher, isbn, classCode));
+        ArrayList<Book> books = (ArrayList<Book>) jdbcTemplate.query("SELECT * FROM books WHERE bookTitle LIKE '%'||?||'%' AND author LIKE '%'||?||'%' AND publisher LIKE '%'||?||'%' AND isbn LIKE '%'||?||'%' AND classCode LIKE '%'||?||'%'", new BookRowMapper(), bookTitle, author, publisher, isbn, classCode);
 
         return books;
     }
@@ -46,5 +58,4 @@ public class TmpBmsRepository implements BmsRepository {
 
         return books;
     }
-    
 }
