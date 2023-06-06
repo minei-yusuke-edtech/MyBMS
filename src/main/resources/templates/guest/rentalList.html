@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody th:unless="${rentBooks.isEmpty()}">
-                    <tr th:each="book: ${rentBooks}" th:object="${bookidlist}">
+                    <tr th:each="book: ${rentBooks}" th:object="${rendingBookIDList}">
                         <td>
                             <input type="checkbox" name="selectedBooks" th:value="${book.bookID}" th:field="*{selectedBooks}">
                         </td>

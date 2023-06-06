@@ -16,6 +16,14 @@ class BookRowMapper implements RowMapper<Book> {
     }
 }
 
+class RentalListRowMapper implements RowMapper<RentalInfomation> {
+    public RentalInfomation mapRow(ResultSet rs, int rowNum) throws SQLException {
+        RentalInfomation info = new RentalInfomation(rs.getString("username"), rs.getInt("bookID"), rs.getDate("rentDate"), rs.getDate("returnDate"), rs.getString("rentStatus"));
+        
+        return info;
+    }
+}
+
 @Repository
 public class JdbcBmsRepository implements BmsRepository {
 
@@ -57,5 +65,28 @@ public class JdbcBmsRepository implements BmsRepository {
         books.add(new Book(3, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
 
         return books;
+    }
+
+    private void insertCandidateList(String username, int bookID) {
+        jdbcTemplate.update("INSERT INTO RentalList (username, bookID, rentStatus) VALUES (?, ?, '貸出候補')", username, bookID);
+    }
+
+    @Override
+    public void entryCandidateList(String username, int bookID) {
+        ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE bookID = ? AND username = ?", new RentalListRowMapper(), bookID, username);
+        // books.add(new Book(bookID, null, null, null, 0, null, null, null, false));
+
+        if (infos.size() == 0) {
+            insertCandidateList(username, bookID);
+        } else {
+            for (RentalInfomation rentalInfomation : infos) {
+                if (rentalInfomation.getRentStatus().equals("貸出中") || rentalInfomation.getRentStatus().equals("貸出候補")) {
+                    return;
+                }
+            }
+            insertCandidateList(username, bookID);
+        }
+
+        // RentalInfomation info = infos.size() > 0 ? infos.get(0) : null;
     }
 }

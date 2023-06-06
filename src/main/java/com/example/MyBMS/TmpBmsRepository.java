@@ -46,5 +46,11 @@ public class TmpBmsRepository implements BmsRepository {
 
         return books;
     }
+
+    @Override
+    public void entryCandidateList(String username, int bookID) {
+        // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'entryCandidateList'");
+    }
     
 }

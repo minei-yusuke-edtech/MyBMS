@@ -27,9 +27,10 @@ public class BookController {
     }
 
     @GetMapping("view/{bookID}")
-    public String view(Model model, @PathVariable("bookID") int bookID) {
+    public String view(Model model, @PathVariable("bookID") int bookID, CandidateBookForm form) {
         Book book = bmsRepository.findById(bookID);
         model.addAttribute("book", book);
+        model.addAttribute("candidateBookForm", form);
         return "book/view";
     }
 
@@ -43,6 +44,25 @@ public class BookController {
         }
         model.addAttribute("searchForm", form);
         return "book/find";
+    }
+
+    @PostMapping("entry")
+    public String entry(Model model, CandidateBookForm form, BookIdList rendingBookIDList, BookIdList candidateBookIDList) {
+        // debug用
+        String username = "test";
+        int bookID = form.getBookID();
+        bmsRepository.entryCandidateList(username, bookID);
+        // 貸出中図書のテーブル
+        model.addAttribute("rendingBookIDList", rendingBookIDList);
+        ArrayList<Book> rentBooks = bmsRepository.findAllRentBooks(username);
+
+        // 貸出候補図書のテーブル
+        model.addAttribute("candidateBookIDList", candidateBookIDList);
+        ArrayList<Book> candidateRentBooks = bmsRepository.findAllCandidateRentBooks(username);
+        model.addAttribute("rentBooks", rentBooks);
+        model.addAttribute("candidateRentBooks", candidateRentBooks);
+
+        return "guest/rentalList";
     }
     
 }
