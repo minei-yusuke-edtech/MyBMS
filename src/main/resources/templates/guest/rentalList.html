@@ -53,8 +53,8 @@
                         <th>状態</th>
                     </tr>
                 </thead>
-                <!-- <tbody th:unless="${books.isEmpty()}">
-                    <tr th:each="book: ${rentBooks}" th:object="${bookidlist}">
+                <tbody th:unless="${candidateRentBooks.isEmpty()}">
+                    <tr th:each="book: ${candidateRentBooks}" th:object="${candidateBookIDList}">
                         <td>
                             <input type="checkbox" name="selectedBooks" th:value="${book.bookID}" th:field="*{selectedBooks}">
                         </td>
@@ -63,7 +63,7 @@
                         <td><span th:text="${book.publisher}"></span></td>
                         <td><span th:text="${book.enabled}"></span></td>
                     </tr>
-                </tbody> -->
+                </tbody>
             </table>
             <input type="submit" value="貸出" formmethod="post" formaction="/guest/rent">
             <input type="submit" value="取消" formmethod="post" formaction="/guest/cancel">

@@ -22,12 +22,14 @@ public class GuestController {
     }
 
     @GetMapping("rentalList")
-    public String rentalList(Model model, BookIdList bookidlist) {
+    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList) {
         // debug用
-        String username = "0";
+        String username = "test";
 
-        model.addAttribute("bookidlist", bookidlist);
+        // model.addAttribute("bookidlist", bookidlist);
+        model.addAttribute("rendingBookIDList", rendingBookIDList);
         ArrayList<Book> rentBooks = bmsRepository.findAllRentBooks(username);
+        model.addAttribute("candidateBookIDList", candidateBookIDList);
         ArrayList<Book> candidateRentBooks = bmsRepository.findAllCandidateRentBooks(username);
         model.addAttribute("rentBooks", rentBooks);
         model.addAttribute("candidateRentBooks", candidateRentBooks);
