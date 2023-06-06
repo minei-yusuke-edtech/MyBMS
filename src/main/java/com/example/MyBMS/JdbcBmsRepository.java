@@ -31,12 +31,12 @@ public class JdbcBmsRepository implements BmsRepository {
 
     @Override
     public Book findById(int bookID) {
-        ArrayList<Book> books = new ArrayList<>();
-        books.add(new Book(bookID, null, null, null, 0, null, null, null, false));
+        ArrayList<Book> books = (ArrayList<Book>) jdbcTemplate.query("SELECT * FROM Books WHERE bookID = ?", new BookRowMapper(), bookID);
+        // books.add(new Book(bookID, null, null, null, 0, null, null, null, false));
 
         Book book = books.size() > 0 ? books.get(0) : null;
         // debug用
-        if (bookID == -1) book = null;
+        // if (bookID == -1) book = null;
 
         return book;
     }
