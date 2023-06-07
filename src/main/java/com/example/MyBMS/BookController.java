@@ -40,6 +40,7 @@ public class BookController {
             model.addAttribute("books", new ArrayList<Book>());
         } else {
             ArrayList<Book> books = bmsRepository.search(form.getBook(), form.getAuthor(), form.getPublisher(), form.getISBN(), form.getClassCode());
+            bmsRepository.setAvailable(books);
             model.addAttribute("books", books);
         }
         model.addAttribute("searchForm", form);

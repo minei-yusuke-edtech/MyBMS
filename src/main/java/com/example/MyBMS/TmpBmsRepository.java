@@ -50,7 +50,25 @@ public class TmpBmsRepository implements BmsRepository {
     @Override
     public void entryCandidateList(String username, int bookID) {
         // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'entryCandidateList'");
+        throw new UnsupportedOperationException("Unimplemented method 'entryCandidateList'");
+    }
+
+    @Override
+    public void cancelCandidateItem(String username, int[] bookIDList) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'cancelCandidateItem'");
+    }
+
+    @Override
+    public boolean isAvailable(int bookID) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isAvailable'");
+    }
+
+    @Override
+    public void setAvailable(ArrayList<Book> books) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setAvailable'");
     }
     
 }

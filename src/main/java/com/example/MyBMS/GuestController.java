@@ -47,7 +47,11 @@ public class GuestController {
     }
 
     @PostMapping("cancel")
-    public String cancel(Model model) {
+    public String cancel(Model model, BookIdList candidateBookIDList) {
+        // debug用
+        String username = "test";
+
+        bmsRepository.cancelCandidateItem(username, candidateBookIDList.getSelectedBooks());
         return "redirect:rentalList";
     }
 }

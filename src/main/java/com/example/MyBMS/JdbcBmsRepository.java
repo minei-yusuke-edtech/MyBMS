@@ -98,4 +98,32 @@ public class JdbcBmsRepository implements BmsRepository {
 
         // RentalInfomation info = infos.size() > 0 ? infos.get(0) : null;
     }
+
+    @Override
+    public void cancelCandidateItem(String username, int[] bookIDList) {
+        for (int bookID : bookIDList) {
+            jdbcTemplate.update("DELETE FROM RentalList WHERE bookID = ? AND username = ?", bookID, username);
+        }
+    }
+
+    @Override
+    public boolean isAvailable(int bookID) {
+        Book book = findById(bookID);
+        if (!book.isEnabled()) return false;
+
+        ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE bookID = ? AND rentStatus = '貸出中'", new RentalListRowMapper(), bookID);
+
+        if (infos.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void setAvailable(ArrayList<Book> books) {
+        for (Book book : books) {
+            book.setEnabled(isAvailable(book.getBookID()));
+        }
+    }
 }
