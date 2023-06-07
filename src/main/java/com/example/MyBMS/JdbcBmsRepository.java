@@ -106,7 +106,7 @@ public class JdbcBmsRepository implements BmsRepository {
     @Override
     public void cancelCandidateItem(String username, int[] bookIDList) {
         for (int bookID : bookIDList) {
-            jdbcTemplate.update("DELETE FROM RentalList WHERE bookID = ? AND username = ?", bookID, username);
+            jdbcTemplate.update("DELETE FROM RentalList WHERE bookID = ? AND username = ? AND rentStatus = '貸出候補'", bookID, username);
         }
     }
 
@@ -134,7 +134,7 @@ public class JdbcBmsRepository implements BmsRepository {
     @Override
     public void returnBooks(String username, int[] bookidlist) {
         for (int bookID : bookidlist) {
-            jdbcTemplate.update("UPDATE RentalList SET rentStatus = '返却済' WHERE bookID = ? AND username = ?", bookID, username);
+            jdbcTemplate.update("UPDATE RentalList SET rentStatus = '返却済', returnDate = current_date WHERE bookID = ? AND username = ? AND rentStatus = '貸出中'", bookID, username);
         }
     }
 
@@ -142,7 +142,7 @@ public class JdbcBmsRepository implements BmsRepository {
     public void rentBooks(String username, int[] bookidlist) {
         for (int bookID : bookidlist) {
             if (getAvailable(bookID).equals("貸出可")) {
-                jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中' WHERE bookID = ? AND username = ? AND rentStatus = '貸出候補'", bookID, username);
+                jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中', rentDate = current_date WHERE bookID = ? AND username = ? AND rentStatus = '貸出候補'", bookID, username);
             }
         }
     }
