@@ -60,7 +60,7 @@ public class TmpBmsRepository implements BmsRepository {
     }
 
     @Override
-    public boolean isAvailable(int bookID) {
+    public String getAvailable(int bookID) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isAvailable'");
     }

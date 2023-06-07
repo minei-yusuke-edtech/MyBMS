@@ -67,7 +67,11 @@ public class JdbcBmsRepository implements BmsRepository {
         ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND rentStatus = '貸出候補'", new RentalListRowMapper(), username);
         ArrayList<Book> books = new ArrayList<>();
         for (RentalInfomation info : infos) {
-            books.add(findById(info.getBookID()));
+            // books.add(findById(info.getBookID()));
+            int bookID = info.getBookID();
+            Book book = findById(bookID);
+            book.setStatus(getAvailable(bookID));
+            books.add(book);
         }
         // ArrayList<Book> books = new ArrayList<>();
         // books.add(new Book(2, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
@@ -107,23 +111,23 @@ public class JdbcBmsRepository implements BmsRepository {
     }
 
     @Override
-    public boolean isAvailable(int bookID) {
+    public String getAvailable(int bookID) {
         Book book = findById(bookID);
-        if (!book.isEnabled()) return false;
+        if (!book.isEnabled()) return "削除済";
 
         ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE bookID = ? AND rentStatus = '貸出中'", new RentalListRowMapper(), bookID);
 
         if (infos.size() == 0) {
-            return true;
+            return "貸出可";
         } else {
-            return false;
+            return "貸出中";
         }
     }
 
     @Override
     public void setAvailable(ArrayList<Book> books) {
         for (Book book : books) {
-            book.setEnabled(isAvailable(book.getBookID()));
+            book.setStatus(getAvailable(book.getBookID()));
         }
     }
 }

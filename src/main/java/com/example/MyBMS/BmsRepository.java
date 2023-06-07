@@ -6,7 +6,7 @@ interface BmsRepository {
     ArrayList<Book> search(String bookTitle, String author, String publisher,  
     String isbn, String classCode);
     Book findById(int bookID);
-    boolean isAvailable(int bookID);
+    String getAvailable(int bookID);
     void setAvailable(ArrayList<Book> books);
     void entryCandidateList(String username, int bookID);
     ArrayList<Book> findAllRentBooks(String username);
