@@ -141,8 +141,8 @@ public class JdbcBmsRepository implements BmsRepository {
     @Override
     public void rentBooks(String username, int[] bookidlist) {
         for (int bookID : bookidlist) {
-            if (getAvailable(bookID) == "貸出可") {
-                jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中' WHERE bookID = ? AND username = ?", bookID, username);
+            if (getAvailable(bookID).equals("貸出可")) {
+                jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中' WHERE bookID = ? AND username = ? AND rentStatus = '貸出候補'", bookID, username);
             }
         }
     }
