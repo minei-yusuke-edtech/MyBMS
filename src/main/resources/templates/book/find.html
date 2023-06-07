@@ -56,8 +56,8 @@
                         <td><span th:text="${book.author}"></span></td>
                         <td><span th:text="${book.publisher}"></span></td>
                         <td>
-                            <span th:if="${book.status == '貸出可'}" th:text="〇"></span>
-                            <span th:unless="${book.status == '貸出可'}" th:text="×"></span>
+                            <span th:if="${book.status.equals('貸出可')}">〇</span>
+                            <span th:unless="${book.status.equals('貸出可')}">×</span>
                         </td>
                     </tr>
                 </tbody>

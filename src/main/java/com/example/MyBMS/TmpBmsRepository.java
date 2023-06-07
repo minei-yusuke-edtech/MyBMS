@@ -70,5 +70,17 @@ public class TmpBmsRepository implements BmsRepository {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setAvailable'");
     }
+
+    @Override
+    public void returnBooks(String username, int[] bookidlist) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'returnBooks'");
+    }
+
+    @Override
+    public void rentBooks(String username, int[] bookidlist) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'rentBooks'");
+    }
     
 }

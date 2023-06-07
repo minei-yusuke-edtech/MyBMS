@@ -12,4 +12,10 @@ interface BmsRepository {
     ArrayList<Book> findAllRentBooks(String username);
     ArrayList<Book> findAllCandidateRentBooks(String username);
     void cancelCandidateItem(String username, int[] bookIDList);
+
+    // 本を返却する処理(貸出管理テーブルの貸出中の列を返却済に変更する)
+    void returnBooks(String username, int[] bookidlist);
+
+    // 本を借りる処理(貸出候補の図書を貸出中に変更する)
+    void rentBooks(String username, int[] bookidlist);
 }

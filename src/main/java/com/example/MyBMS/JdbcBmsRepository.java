@@ -130,4 +130,20 @@ public class JdbcBmsRepository implements BmsRepository {
             book.setStatus(getAvailable(book.getBookID()));
         }
     }
+
+    @Override
+    public void returnBooks(String username, int[] bookidlist) {
+        for (int bookID : bookidlist) {
+            jdbcTemplate.update("UPDATE RentalList SET rentStatus = '返却済' WHERE bookID = ? AND username = ?", bookID, username);
+        }
+    }
+
+    @Override
+    public void rentBooks(String username, int[] bookidlist) {
+        for (int bookID : bookidlist) {
+            if (getAvailable(bookID) == "貸出可") {
+                jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中' WHERE bookID = ? AND username = ?", bookID, username);
+            }
+        }
+    }
 }
