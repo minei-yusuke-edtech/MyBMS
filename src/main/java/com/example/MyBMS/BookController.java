@@ -3,6 +3,8 @@ package com.example.MyBMS;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,9 +50,9 @@ public class BookController {
     }
 
     @PostMapping("entry")
-    public String entry(Model model, CandidateBookForm form, BookIdList rendingBookIDList, BookIdList candidateBookIDList) {
-        // debug用
-        String username = "test";
+    public String entry(Model model, CandidateBookForm form, BookIdList rendingBookIDList, BookIdList candidateBookIDList, @AuthenticationPrincipal UserDetails user) {
+        String username = user.getUsername();
+        
         int bookID = form.getBookID();
         bmsRepository.entryCandidateList(username, bookID);
         // 貸出中図書のテーブル
