@@ -42,7 +42,7 @@ public class GuestController {
     }
 
     @PostMapping("return")
-    public String returnBook(Model model, @Validated BookIdList bookidlist, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+    public String returnBook(@Validated BookIdList bookidlist, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
             return "redirect:rentalList";
         }
@@ -71,7 +71,7 @@ public class GuestController {
     }
 
     @PostMapping("cancel")
-    public String cancel(Model model, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+    public String cancel(@Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
             return "redirect:rentalList";
         }
