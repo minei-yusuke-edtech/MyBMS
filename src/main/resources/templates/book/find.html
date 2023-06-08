@@ -16,7 +16,7 @@
     <div class="container">
         <div class="search-form">
             <h2 class="search-headline">検索条件</h2>
-            <form action="/book/search" method="post" th:object="${searchForm}">
+            <form th:action="@{/book/search}" th:method="post" th:object="${searchForm}">
                 <label for="book">図書名</label>
                 <input type="text" th:field="*{book}">
 

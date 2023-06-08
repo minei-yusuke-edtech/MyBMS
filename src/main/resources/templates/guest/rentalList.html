@@ -15,7 +15,7 @@
         <h1>貸出図書リスト</h1>
     </header>
     <div class="container">
-        <form class="rent-books" method="post" action="/guest/return">
+        <form class="rent-books" th:method="post" th:action="@{/guest/return}">
             <h2 class="search-headline">貸出中図書</h2>
             <table>
                 <thead>
@@ -65,8 +65,9 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="貸出" formmethod="post" formaction="/guest/rent">
-            <input type="submit" value="取消" formmethod="post" formaction="/guest/cancel">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="submit" value="貸出" th:formmethod="post" th:formaction="@{/guest/rent}">
+            <input type="submit" value="取消" th:formmethod="post" th:formaction="@{/guest/cancel}">
         </form>
     </div>
 

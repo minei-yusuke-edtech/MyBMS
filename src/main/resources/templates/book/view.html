@@ -51,7 +51,7 @@
                 </tr>
             </table>
         </div>
-        <form action="/book/entry" method="post" th:object="${candidateBookForm}">
+        <form th:action="@{/book/entry}" th:method="post" th:object="${candidateBookForm}">
             <input type="hidden" th:unless="${book} == null" th:value="${book.bookID}" th:field="*{bookID}">
             <input th:unless="${book} == null" type="submit" value="貸出候補図書に登録">
             <input th:if="${book} == null" type="submit" value="貸出候補図書に登録" disabled>
