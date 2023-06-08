@@ -76,4 +76,10 @@ public class GuestController {
         bmsRepository.cancelCandidateItem(username, candidateBookIDList.getSelectedBooks());
         return "redirect:rentalList";
     }
+
+    @GetMapping("view")
+    public String view(Model model, @AuthenticationPrincipal UserDetails user) {
+        model.addAttribute("user", user);
+        return "guest/view";
+    }
 }

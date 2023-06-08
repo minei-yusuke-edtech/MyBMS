@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:display="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta char set="UTF-8">
+    <title>利用者表示 | 美ら島図書館図書貸出システム</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>美ら島図書館図書貸出システム</h1>
+        <h1>利用者表示</h1>
+    </header>
+    <div class="container">
+        <div class="user-info">
+            <p th:if="${user} == null">ユーザーがみつかりません</p>
+            <table class="user-info-table">
+                <tr>
+                    <td>利用者ID</td>
+                    <td><span th:unless="${user} == null" th:text="${user.username}"></span></td>
+                </tr>
+                <!-- <tr>
+                    <td>著者</td>
+                    <td><span th:unless="${book} == null" th:text="${book.author}"></span></td>
+                </tr>
+                <tr>
+                    <td>出版社</td>
+                    <td><span th:unless="${book} == null" th:text="${book.publisher}"></span></td>
+                </tr>
+                <tr>
+                    <td>出版年</td>
+                    <td><span th:unless="${book} == null" th:text="${book.issue}"></span></td>
+                </tr>
+                <tr>
+                    <td>版数</td>
+                    <td><span th:unless="${book} == null" th:text="${book.version}"></span></td>
+                </tr>
+                <tr>
+                    <td>ISBN</td>
+                    <td><span th:unless="${book} == null" th:text="${book.isbn}"></span></td>
+                </tr>
+                <tr>
+                    <td>分類コード</td>
+                    <td><span th:unless="${book} == null" th:text="${book.classCode}"></span></td>
+                </tr>
+                <tr>
+                    <td>図書ID</td>
+                    <td><span th:unless="${book} == null" th:text="${book.bookID}"></span></td>
+                </tr> -->
+            </table>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="item">
+                <a href="/guest/myPage">利用者マイページ</a>
+            </div>
+            <div class="item">
+                <a href="#" onclick="history.back(-1);return false;">戻る</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
