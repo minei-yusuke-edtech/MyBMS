@@ -3,8 +3,12 @@ package com.example.MyBMS;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +26,8 @@ public class GuestController {
     }
 
     @GetMapping("rentalList")
-    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList) {
-        // debug用
-        String username = "test";
+    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList, @AuthenticationPrincipal UserDetails user) {
+        String username = user.getUsername();
 
         // model.addAttribute("bookidlist", bookidlist);
         model.addAttribute("rendingBookIDList", rendingBookIDList);
@@ -37,9 +40,12 @@ public class GuestController {
     }
 
     @PostMapping("return")
-    public String returnBook(Model model, BookIdList bookidlist) {
-        // debug用
-        String username = "test";
+    public String returnBook(Model model, @Validated BookIdList bookidlist, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+        if (result.hasErrors()) {
+            return "redirect:rentalList";
+        }
+
+        String username = user.getUsername();
 
         bmsRepository.returnBooks(username, bookidlist.getSelectedBooks());
 
@@ -47,9 +53,12 @@ public class GuestController {
     }
 
     @PostMapping("rent")
-    public String rent(Model model, BookIdList candidateBookIDList) {
-        // debug用
-        String username = "test";
+    public String rent(Model model, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+        if (result.hasErrors()) {
+            return "redirect:rentalList";
+        }
+
+        String username = user.getUsername();
 
         bmsRepository.rentBooks(username, candidateBookIDList.getSelectedBooks());
 
@@ -57,9 +66,12 @@ public class GuestController {
     }
 
     @PostMapping("cancel")
-    public String cancel(Model model, BookIdList candidateBookIDList) {
-        // debug用
-        String username = "test";
+    public String cancel(Model model, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+        if (result.hasErrors()) {
+            return "redirect:rentalList";
+        }
+
+        String username = user.getUsername();
 
         bmsRepository.cancelCandidateItem(username, candidateBookIDList.getSelectedBooks());
         return "redirect:rentalList";
