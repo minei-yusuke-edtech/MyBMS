@@ -28,7 +28,7 @@ public class GuestController {
     }
 
     @GetMapping("rentalList")
-    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList, @AuthenticationPrincipal UserDetails user, @ModelAttribute("rentFaied") String message) {
+    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList, @AuthenticationPrincipal UserDetails user, @ModelAttribute("rentFaied") String rentFaied, @ModelAttribute("emptyCB") String emptyCB) {
         String username = user.getUsername();
 
         // model.addAttribute("bookidlist", bookidlist);
@@ -42,8 +42,9 @@ public class GuestController {
     }
 
     @PostMapping("return")
-    public String returnBook(@Validated BookIdList bookidlist, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+    public String returnBook(RedirectAttributes redirectAttributes, @Validated BookIdList bookidlist, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("emptyCB", "図書が選択されていません");
             return "redirect:rentalList";
         }
 
@@ -57,6 +58,7 @@ public class GuestController {
     @PostMapping("rent")
     public String rent(RedirectAttributes redirectAttributes, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("emptyCB", "図書が選択されていません");
             return "redirect:rentalList";
         }
 
@@ -71,8 +73,9 @@ public class GuestController {
     }
 
     @PostMapping("cancel")
-    public String cancel(@Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+    public String cancel(RedirectAttributes redirectAttributes, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("emptyCB", "図書が選択されていません");
             return "redirect:rentalList";
         }
 

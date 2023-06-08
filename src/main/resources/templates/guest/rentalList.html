@@ -15,6 +15,7 @@
         <h1>貸出図書リスト</h1>
     </header>
     <div class="container">
+        <p th:text="${emptyCB}"></p>
         <form class="rent-books" th:method="post" th:action="@{/guest/return}">
             <h2 class="search-headline">貸出中図書</h2>
             <table>
