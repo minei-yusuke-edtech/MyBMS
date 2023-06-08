@@ -19,6 +19,16 @@
         <a href="/book/find">図書検索</a>
         <a href="/guest/rentalList">貸出図書リスト</a>
     </div>
+    <footer>
+        <div class="container">
+            <form role="form" id="logout" th:action="@{/logout}" method="post">
+                <button type="submit">ログアウト</button>
+            </form>
+            <div class="item">
+                <a href="#" onclick="history.back(-1);return false;">戻る</a>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
