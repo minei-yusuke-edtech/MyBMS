@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 class BookRowMapper implements RowMapper<Book> {
     public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -139,11 +140,24 @@ public class JdbcBmsRepository implements BmsRepository {
     }
 
     @Override
-    public void rentBooks(String username, int[] bookidlist) {
-        for (int bookID : bookidlist) {
-            if (getAvailable(bookID).equals("貸出可")) {
-                jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中', rentDate = current_date WHERE bookID = ? AND username = ? AND rentStatus = '貸出候補'", bookID, username);
+    @Transactional
+    public boolean rentBooks(String username, int[] bookidlist) {
+        try {
+            for (int bookID : bookidlist) {
+                if (getAvailable(bookID).equals("貸出可") && isRentable(username, bookID)) {
+                    jdbcTemplate.update("UPDATE RentalList SET rentStatus = '貸出中', rentDate = current_date WHERE bookID = ? AND username = ? AND rentStatus = '貸出候補'", bookID, username);
+                } else {
+                    throw new RuntimeException();
+                }
             }
+        } catch (RuntimeException e) {
+            return false;
         }
+        return true;
+    }
+
+    private boolean isRentable(String username, int bookID) {
+        ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND bookID = ? AND rentDate = current_date", new RentalListRowMapper(), username, bookID);
+        return infos.size() == 0;
     }
 }

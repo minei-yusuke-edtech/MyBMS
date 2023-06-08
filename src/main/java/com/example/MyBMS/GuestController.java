@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("guest")
@@ -26,7 +28,7 @@ public class GuestController {
     }
 
     @GetMapping("rentalList")
-    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList, @AuthenticationPrincipal UserDetails user) {
+    public String rentalList(Model model, BookIdList rendingBookIDList, BookIdList candidateBookIDList, @AuthenticationPrincipal UserDetails user, @ModelAttribute("rentFaied") String message) {
         String username = user.getUsername();
 
         // model.addAttribute("bookidlist", bookidlist);
@@ -53,15 +55,18 @@ public class GuestController {
     }
 
     @PostMapping("rent")
-    public String rent(Model model, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+    public String rent(RedirectAttributes redirectAttributes, @Validated BookIdList candidateBookIDList, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
             return "redirect:rentalList";
         }
 
         String username = user.getUsername();
 
-        bmsRepository.rentBooks(username, candidateBookIDList.getSelectedBooks());
+        boolean isRented = bmsRepository.rentBooks(username, candidateBookIDList.getSelectedBooks());
 
+        if (!isRented){
+            redirectAttributes.addFlashAttribute("rentFailed", "貸出に失敗しました");
+        }
         return "redirect:rentalList";
     }
 

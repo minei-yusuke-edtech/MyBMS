@@ -78,7 +78,7 @@ public class TmpBmsRepository implements BmsRepository {
     }
 
     @Override
-    public void rentBooks(String username, int[] bookidlist) {
+    public boolean rentBooks(String username, int[] bookidlist) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rentBooks'");
     }
