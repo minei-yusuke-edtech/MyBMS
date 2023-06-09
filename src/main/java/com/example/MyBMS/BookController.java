@@ -38,7 +38,9 @@ public class BookController {
 
     @PostMapping("search")
     public String search(Model model, @Validated SearchForm form, BindingResult result) {
+        boolean validateFailed = false;
         if (result.getFieldErrors().size() == 5) {
+            validateFailed = true;
             model.addAttribute("books", new ArrayList<Book>());
         } else {
             ArrayList<Book> books = bmsRepository.search(form.getBook(), form.getAuthor(), form.getPublisher(), form.getISBN(), form.getClassCode());
@@ -46,6 +48,7 @@ public class BookController {
             model.addAttribute("books", books);
         }
         model.addAttribute("searchForm", form);
+        model.addAttribute("validateFailed", validateFailed);
         return "book/find";
     }
 
