@@ -15,7 +15,7 @@
     </header>
     <div class="container">
         <div class="book-info">
-            <p th:if="${book} == null">対象図書がみつかりません</p>
+            <p th:if="${book} == null" class="null-book">対象図書がみつかりません</p>
             <table class="book-info-table">
                 <tr>
                     <td>図書名</td>
