@@ -17,6 +17,7 @@
         <div class="search-form">
             <h2 class="search-headline">検索条件</h2>
             <form th:action="@{/book/search}" th:method="post" th:object="${searchForm}">
+                <p th:if="${#fields.allErrors().size() == 5}">いずれかの条件を入力してください</p>
                 <label for="book">図書名</label>
                 <input type="text" th:field="*{book}">
 

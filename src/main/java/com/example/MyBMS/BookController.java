@@ -38,7 +38,7 @@ public class BookController {
 
     @PostMapping("search")
     public String search(Model model, @Validated SearchForm form, BindingResult result) {
-        if (result.hasErrors()) {
+        if (result.getFieldErrors().size() == 5) {
             model.addAttribute("books", new ArrayList<Book>());
         } else {
             ArrayList<Book> books = bmsRepository.search(form.getBook(), form.getAuthor(), form.getPublisher(), form.getISBN(), form.getClassCode());

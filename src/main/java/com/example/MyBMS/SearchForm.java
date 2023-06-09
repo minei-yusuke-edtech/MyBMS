@@ -1,10 +1,17 @@
 package com.example.MyBMS;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class SearchForm {
+    @NotBlank
     private String book = null;
+    @NotBlank
     private String classCode = null;
+    @NotBlank
     private String author = null;
+    @NotBlank
     private String publisher = null;
+    @NotBlank
     private String ISBN = null;
     
     public String getBook() {
