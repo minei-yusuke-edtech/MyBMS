@@ -66,7 +66,7 @@ public class GuestController {
         }
 
         String username = user.getUsername();
-        int maxRentBookNumber = 1;
+        int maxRentBookNumber = 5;
 
         int rendingBookNumber = bmsRepository.checkRentBookNumber(username);
         if (rendingBookNumber >= maxRentBookNumber){
