@@ -18,4 +18,6 @@ interface BmsRepository {
 
     // 本を借りる処理(貸出候補の図書を貸出中に変更する)
     boolean rentBooks(String username, int[] bookidlist);
+
+    int checkRentBookNumber(String username);
 }

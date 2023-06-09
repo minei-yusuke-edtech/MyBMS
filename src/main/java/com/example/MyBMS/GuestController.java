@@ -63,6 +63,13 @@ public class GuestController {
         }
 
         String username = user.getUsername();
+        int maxRentBookNumber = 1;
+
+        int rendingBookNumber = bmsRepository.checkRentBookNumber(username);
+        if (rendingBookNumber >= maxRentBookNumber){
+            redirectAttributes.addFlashAttribute("rentFailed", String.format("貸出は最大%d冊までです", maxRentBookNumber));
+            return "redirect:rentalList";
+        }
 
         boolean isRented = bmsRepository.rentBooks(username, candidateBookIDList.getSelectedBooks());
 

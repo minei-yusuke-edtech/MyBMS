@@ -160,4 +160,11 @@ public class JdbcBmsRepository implements BmsRepository {
         ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND bookID = ? AND rentDate = current_date", new RentalListRowMapper(), username, bookID);
         return infos.size() == 0;
     }
+
+    @Override
+    public int checkRentBookNumber(String username) {
+        ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND rentStatus = '貸出中'", new RentalListRowMapper(), username);
+
+        return infos.size();
+    }
 }
