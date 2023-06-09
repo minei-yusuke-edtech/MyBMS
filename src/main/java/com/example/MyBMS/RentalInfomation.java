@@ -9,12 +9,19 @@ public class RentalInfomation {
     private Date returnDate;
     private String rentStatus;
 
+    private boolean delayed = false;
+
     public RentalInfomation(String username, int bookID, Date rentDate, Date returnDate, String rentStatus) {
         this.username = username;
         this.bookID = bookID;
         this.rentDate = rentDate;
         this.returnDate = returnDate;
         this.rentStatus = rentStatus;
+        if (returnDate != null) {
+            long miliseconds = System.currentTimeMillis();
+            Date today = new Date(miliseconds);
+            this.delayed = returnDate.before(today);
+        }
     }
     
     public String getUsername() {
@@ -46,6 +53,12 @@ public class RentalInfomation {
     }
     public void setRentStatus(String rentStatus) {
         this.rentStatus = rentStatus;
+    }
+    public boolean isDelayed() {
+        return delayed;
+    }
+    public void setDelayed(boolean delayed) {
+        this.delayed = delayed;
     }
 
 }

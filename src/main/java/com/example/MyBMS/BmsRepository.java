@@ -20,4 +20,5 @@ interface BmsRepository {
     boolean rentBooks(String username, int[] bookidlist);
 
     int checkRentBookNumber(String username);
+    ArrayList<RentalInfomation> getRendingInfo(String username);
 }

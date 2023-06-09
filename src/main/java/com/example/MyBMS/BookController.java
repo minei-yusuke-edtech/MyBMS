@@ -68,6 +68,9 @@ public class BookController {
         model.addAttribute("rentBooks", rentBooks);
         model.addAttribute("candidateRentBooks", candidateRentBooks);
 
+        ArrayList<RentalInfomation> infos = bmsRepository.getRendingInfo(username);
+        model.addAttribute("infos", infos);
+
         return "guest/rentalList";
     }
     

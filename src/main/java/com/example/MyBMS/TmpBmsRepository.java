@@ -88,5 +88,11 @@ public class TmpBmsRepository implements BmsRepository {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'checkRentBookNumber'");
     }
+
+    @Override
+    public ArrayList<RentalInfomation> getRendingInfo(String username) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRendingInfo'");
+    }
     
 }

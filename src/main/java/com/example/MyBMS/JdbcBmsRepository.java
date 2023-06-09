@@ -57,8 +57,6 @@ public class JdbcBmsRepository implements BmsRepository {
         for (RentalInfomation info : infos) {
             books.add(findById(info.getBookID()));
         }
-        // books.add(new Book(0, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
-        // books.add(new Book(1, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
 
         return books;
     }
@@ -68,15 +66,11 @@ public class JdbcBmsRepository implements BmsRepository {
         ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND rentStatus = '貸出候補'", new RentalListRowMapper(), username);
         ArrayList<Book> books = new ArrayList<>();
         for (RentalInfomation info : infos) {
-            // books.add(findById(info.getBookID()));
             int bookID = info.getBookID();
             Book book = findById(bookID);
             book.setStatus(getAvailable(bookID));
             books.add(book);
         }
-        // ArrayList<Book> books = new ArrayList<>();
-        // books.add(new Book(2, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
-        // books.add(new Book(3, "hogefuga", "Mr.Hoge", "hoge社", 0, "第1版", "123456", "1234", false));
 
         return books;
     }
@@ -166,5 +160,12 @@ public class JdbcBmsRepository implements BmsRepository {
         ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND rentStatus = '貸出中'", new RentalListRowMapper(), username);
 
         return infos.size();
+    }
+
+    @Override
+    public ArrayList<RentalInfomation> getRendingInfo(String username) {
+        ArrayList<RentalInfomation> infos = (ArrayList<RentalInfomation>) jdbcTemplate.query("SELECT * FROM RentalList WHERE username = ? AND rentStatus = '貸出中'", new RentalListRowMapper(), username);
+
+        return infos;
     }
 }
